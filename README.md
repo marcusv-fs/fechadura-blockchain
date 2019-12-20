@@ -47,7 +47,7 @@ iot_cli # Para executar a aplicação
 5. Sair
 ```
 
-#Usando em um raspberry
+# Usando em um raspberry
 Para utilizar esse código em um raspberry podem ser necessários algumas modificações dependendo da versão e do modelo do raspberry. 
 O primeiro passo a ser feito para a execução em um raspberry é a conexão dos cabos e dos equipamentos da fechadura de forma correta. 
 O passo a passo para a configuração dessas peças pode ser encontrada no repositório Docker_open.
