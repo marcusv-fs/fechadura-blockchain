@@ -120,7 +120,7 @@ def main():
 
     op = "-1"
     while op != "5":
-        print("\n1 - store sensor data\n2 - get sensor data\n3 - get sensor history\n4 - start scan\n5 - exit\n")
+        print("\n1 - Salvar um endereço MAC\n2 - Obter o último endereço salvo\n3 - Obter o histórico de endereços adicionados\n4 - Iniciar a fechadura\n5 - Sair\n")
         op = input("Operation: ")
         if op == "1":
             store_sensor_data()
