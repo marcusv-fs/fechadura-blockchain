@@ -13,36 +13,42 @@ Ao iniciar a fechadura ele roda em um loop infinito procurando por endereços MA
 
 O usuário é identificado por um nome de usuário e uma chave publica correspondente. Os endereços MAC são salvos em um endereço hash SHA 512 derivado da chave publica do usuário e do namespace da família de transação IOT.
 
-# Components
-The client application is written in Python, written in two parts: _client.py file representing the backend stuff and the _app.py representing the frontend stuff. The example is built by using the setup.py file located in one directory level up. The Transaction Processor (smart contract | chaincode) is written in Python using python-sawtooth-sdk in _tp.py file.
+# Componentes 
+A aplicação do cliente foi escrita em Python, dividida em duas partes: _client.py, que representa o backend, e o _app.py que representa o frontend. O exemplo foi construído usando o arquivo setup.py, que está localizado em um diretório acima. O Processador de Transações (smart contract | chaincode) foi escrito em python usando a python-sawtooth-sdk no arquivo _tp.py
 
 # Usage
-
-Start the pre-built Docker containers in docker-compose.yaml file, located in sawtooth-iot directory:
+Inicie o container pre construído do Docker no docker-compose.yaml file, localizado no diretório sawtooth-iot:
 ```bash
-cd sawtooth-iot
+cd sawtooth-iot-master
 docker-compose up
 ```
-At this point all the containers should be running.
+Nesse momento todos os containers devem estar rodando.
 
-To launch the client, you could do this:
+Para iniciar o cliente, você deve digitar isso:
 ```bash
 docker exec -it iot-client bash
 ```
 
-You can locate the right Docker client container name using `docker ps`.
+Você pode localizar o nome correto do container do cliente docker usando `docker ps`.
 
-Sample command usage:
+Exemplo de uso de comando:
 
 ```bash
-#Create a iot
-sawtooth keygen iot #This creates the public/private keys for iot, a pre-requisite for the following commands
+#Cria o iot
+sawtooth keygen iot #Isso cria as chaves públicas e privadass do iot,um pré requisito para os comandos a seguir
 
-iot_cli # To execute app
+iot_cli # Para executar a aplicação
 
-# Client App Menu
-1 - store sensor data
-2 - get sensor data
-3 - get sensor history
-4 - exit
+# Menu do aplicativo do cliente
+1. Salvar um endereço MAC
+2. Obter o último endereço salvo
+3. Obter o histórico de endereços adicionados
+4. Iniciar a fechadura 
+5. Sair
 ```
+
+#Usando em um raspberry
+Para utilizar esse código em um raspberry podem ser necessários algumas modificações dependendo da versão e do modelo do raspberry. 
+O primeiro passo a ser feito para a execução em um raspberry é a conexão dos cabos e dos equipamentos da fechadura de forma correta. 
+O passo a passo para a configuração dessas peças pode ser encontrada no repositório Docker_open.
+Tendo conectado o equipamento de maneira correta, agora você deve adicionar o código ao raspberry, porém só é necessário a adição da parte correspondente ao cliente, caso se deseje uma execução mais leve e que o pyprocessor esteja em um equipamento separado. Entretanto, é necessária a mudança da default URL para apontar para o local onde estará rodando o pyprocessor, feito isso, o programa deverá rodar de forma normal.
