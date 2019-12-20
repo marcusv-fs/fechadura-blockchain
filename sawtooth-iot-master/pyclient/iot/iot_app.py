@@ -2,14 +2,14 @@ import os
 from iot.iot_client import IoTClient
 from datetime import datetime
 import time
-#import bluetooth
-#import RPi.GPIO as GPIO
+import bluetooth
+import RPi.GPIO as GPIO
 
-#GPIO.setwarnings(False)
-#GPIO.setmode(GPIO.BOARD)
-#GPIO.setup(8, GPIO.OUT)
-#ReleCanal1 = 8  # controle do GPIO23 (este controla o canal 1 do modulo de reles)
-#ReleCanal2 = 8  # controle do GPIO24 (este controla o canal 2 do modulo de reles)
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(8, GPIO.OUT)
+ReleCanal1 = 8  # controle do GPIO23 (este controla o canal 1 do modulo de reles)
+ReleCanal2 = 8  # controle do GPIO24 (este controla o canal 2 do modulo de reles)
 DISTRIBUTION_NAME = 'iot'
 DEFAULT_URL = 'http://rest-api:8008'
 
@@ -62,10 +62,11 @@ def start_scan():
         results = search()
         print("[SCAN] Fim do scan BLE.")
         if len(results) > 0:
-            for addr in results:
-                print("Dispositivo encontrado: {0}".format(addr))
-                mac(addr)
-                y = 0
+            if len(results) > 0:
+                for addr, name in results:
+                    print("Dispositivo encontrado: {0} - {1}".format(addr, name))
+                    mac(addr)
+                    y = 0
         else:
             print("Nenhum dispositivo BLE encontrado.")
             y = y + 1
@@ -93,30 +94,30 @@ def mac(bl_mac):
         raise Exception("history not found: {}".format(client))
 
 def search():
-    devices = ("48:2C:A0:BA:95:4C","64:32:A8:8D:CA:33")
-    #devices = bluetooth.discover_devices(duration=5, lookup_names=True)
+    devices = bluetooth.discover_devices(duration=5, lookup_names=True)
     return devices
 
 def abrir():
     print("Abrindo fechadura, {}".format(datetime.now()))
-#    GPIO.output(ReleCanal2, GPIO.LOW)
-#    GPIO.output(ReleCanal1, GPIO.LOW)
-#    time.sleep(5)
-#
-#    GPIO.output(ReleCanal1, GPIO.HIGH)
-#    GPIO.output(ReleCanal2, GPIO.HIGH)
+    GPIO.output(ReleCanal2, GPIO.LOW)
+    GPIO.output(ReleCanal1, GPIO.LOW)
+    time.sleep(5)
+
+    GPIO.output(ReleCanal1, GPIO.HIGH)
+    GPIO.output(ReleCanal2, GPIO.HIGH)
 
 def fechar():
-    print("Fechando fechadura")
-    #GPIO.setmode(GPIO.BOARD)
-    #GPIO.setup(ReleCanal1, GPIO.OUT)
-    #GPIO.setup(ReleCanal2, GPIO.OUT)
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(ReleCanal1, GPIO.OUT)
+    GPIO.setup(ReleCanal2, GPIO.OUT)
 
     # desaciona os reles
-    #GPIO.output(ReleCanal1, GPIO.HIGH)
-    #GPIO.output(ReleCanal2, GPIO.HIGH)
+    GPIO.output(ReleCanal1, GPIO.HIGH)
+    GPIO.output(ReleCanal2, GPIO.HIGH)
 
 def main():
+    fechar()
+
     op = "-1"
     while op != "5":
         print("\n1 - store sensor data\n2 - get sensor data\n3 - get sensor history\n4 - start scan\n5 - exit\n")
