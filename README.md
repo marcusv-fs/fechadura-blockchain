@@ -52,3 +52,5 @@ Para utilizar esse código em um raspberry podem ser necessários algumas modifi
 O primeiro passo a ser feito para a execução em um raspberry é a conexão dos cabos e dos equipamentos da fechadura de forma correta. 
 O passo a passo para a configuração dessas peças pode ser encontrada no repositório Docker_open.
 Tendo conectado o equipamento de maneira correta, agora você deve adicionar o código ao raspberry, porém só é necessário a adição da parte correspondente ao cliente, caso se deseje uma execução mais leve e que o pyprocessor esteja em um equipamento separado. Entretanto, é necessária a mudança da default URL para apontar para o local onde estará rodando o pyprocessor, feito isso, o programa deverá rodar de forma normal.
+
+Para facilitar a utilização, foi criado um docker-compose em pyclient e em pyprocessor. Cada docker-compose tem dentro de si somente o necessário para que essa parte funcione, ou seja, somente as partes do pyprocessor ou somente as partes do client. Caso se deseja iniciar uma aplicação contendo ambos, existe um terceiro docker-compose na pasta geral.
